@@ -3,6 +3,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import type { ItaskRepository } from "../domain/task.repository.interface";
 import { ItaskRepositoryToken } from "../domain/task.repository.interface";
+import { Task } from "../domain/task.entity";
 
 @Injectable()
 export class CreateTaskUseCase {
@@ -10,7 +11,22 @@ export class CreateTaskUseCase {
         @Inject(ItaskRepositoryToken)
         private readonly taskRepository: ItaskRepository,
     ){}
+    async execute(title: string, description: string): Promise<Task>{
+        const crypto = await import('crypto'); // Genera el ID
+        const task = new Task(
+            crypto.randomUUID(),
+            title,
+            description,
+            'PENDING',
+            new Date(),
+        );
+        return this.taskRepository.create(task);
+
+    }
 }
+
+
+
 
 //! git remote add origin git@github.com:ovee1/dov-giri6091-api.git
 
