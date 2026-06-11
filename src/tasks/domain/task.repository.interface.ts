@@ -6,7 +6,8 @@ export interface ItaskRepository {
     create(task: Task): Promise<Task>;
     findAll(): Promise<Task[]>;
     findById(id: string): Promise<Task | null>;
-
+    update(task:Task): Promise<Task>; 
+    delete(id: String): Promise<boolean>;
 }
 
 // Token para la inyccion de dependencias
