@@ -44,3 +44,8 @@ bootstrap();
 //! git push
 
 //? npm i --save @nestjs/swagger
+
+//! Uso Prisma ORM  COnexion con la base de datos
+//? npm i -D prisma
+//? npm i @prisma/client
+//? npx prisma init --datasource-provider postgresql
