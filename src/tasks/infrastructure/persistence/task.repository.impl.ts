@@ -13,7 +13,7 @@ export class TaskRepositoryImpl implements ItaskRepository{
     async findAll(): Promise<Task[]> {
         return this.tasks;
     }
-    async findById(id: string): Promise<Task | null> {
+    async findById(id: number): Promise<Task | null> {
         return this.tasks.find( t => t,id == id) || null;
     }
     async update(updateTask: Task): Promise<Task> {
@@ -21,7 +21,7 @@ export class TaskRepositoryImpl implements ItaskRepository{
         this.tasks[index] = updateTask;
         return updateTask;
     }
-    async delete(id: String): Promise<boolean> {
+    async delete(id: number): Promise<boolean> {
         const index = this.tasks.findIndex(t => t.id == id);
         if (index === -1) return false;
         this.tasks.splice(index, 1);

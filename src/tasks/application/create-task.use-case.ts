@@ -14,7 +14,7 @@ export class CreateTaskUseCase {
     async execute(title: string, description: string): Promise<Task>{
         const crypto = await import('crypto'); // Genera el ID
         const task = new Task(
-            crypto.randomUUID(),
+            0,
             title,
             description,
             'PENDING',

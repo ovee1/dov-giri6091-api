@@ -4,7 +4,7 @@ import { GetTaskByIdUseCase } from "@/tasks/application/get-task-by-id.use-case"
 import { UpdateTaskUseCase } from "@/tasks/application/update-task.use-case";
 import {  ItaskRepositoryToken } from "@/tasks/domain/task.repository.interface";
 import type { ItaskRepository } from "@/tasks/domain/task.repository.interface";
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Inject, Param, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Inject, Param, ParseIntPipe, Patch, Post } from "@nestjs/common";
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { version } from "os";
 import { UpdateExpression } from "typescript";
@@ -40,14 +40,14 @@ export class TasksController {
     @ApiParam({ name:'id', description: 'ID de la tarea (UUID)'})
     @ApiResponse({ status: HttpStatus.OK, description: 'Tarea encontrada'})
     @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Tarea no encontrada'})
-    async findOne(@Param("id") id: string) {
+    async findOne(@Param("id", ParseIntPipe) id: number) {
         return this.getTaskByIdUseCase.execute(id);
     }
 
     @Patch(":id")
     @ApiOperation({ summary: 'Actualoza la tarea por ID'})
     @ApiParam({ name:'id', description: 'ID de la tarea (UUID)'})
-    async update(@Param("id") id: string, @Body() updateTask: UpdateTaskDto){
+    async update(@Param("id", ParseIntPipe) id: number, @Body() updateTask: UpdateTaskDto){
         return this.updateTaskUseCase.execute(id, updateTask);
     }
 
@@ -56,7 +56,7 @@ export class TasksController {
     @ApiOperation({ summary: 'Eliminar la tarea por ID'})
     @ApiParam({name: 'id', description: 'ID de la tarea (UUID)'})
     @ApiResponse({ status: HttpStatus.NO_CONTENT, description: ' Tarea eliminada'})
-    async delete(@Param("id") id: string){
+    async delete(@Param("id", ParseIntPipe) id: number){
         return this.deleteTaskUseCase.execute(id);
     }
 

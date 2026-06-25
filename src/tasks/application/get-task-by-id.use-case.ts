@@ -12,7 +12,7 @@ export class GetTaskByIdUseCase{
         private readonly taskRepository: ItaskRepository
     ) { } 
 
-    async execute(id: string): Promise<Task> {
+    async execute(id: number): Promise<Task> {
         const task = await this.taskRepository.findById(id);
         if (!task)
             throw new NotFoundException('La tarea ${id} no existe');
